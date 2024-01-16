@@ -1,0 +1,23 @@
+﻿@model CamXucWeb.ViewModels.CamXucVM;
+
+@{
+	ViewData["Title"] = "Phân Tích Cảm Xúc";
+}
+
+<div class="container">
+    <form asp-controller="CamXuc" asp-action="PredictSentiment" method="post">
+        <div class="form-group">
+            <label asp-for="Text">Nhập cảm xúc:</label>
+            <input type="text" class="form-control" asp-for="Text" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Dự đoán cảm xúc</button>
+    </form>
+
+    @if (ViewBag.Ketqua != null)
+    {
+        <div class="result">
+            <h4>Kết quả dự đoán:</h4>
+            <p>@ViewBag.Ketqua</p>
+        </div>
+    }
+</div>
