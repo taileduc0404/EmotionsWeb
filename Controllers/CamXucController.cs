@@ -6,22 +6,22 @@ using static CamXucWeb.CamXucModel;
 namespace CamXucWeb.Controllers
 {
     public class CamXucController : Controller
-	{
+    {
 
-		private readonly IReviewService _reviewService;
+        private readonly IReviewService _reviewService;
 
         public CamXucController(IReviewService reviewService)
         {
-			_reviewService = reviewService;
+            _reviewService = reviewService;
         }
 
         public IActionResult Index()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
-		public IActionResult PredictSentiment(CamXucVM vm)
-		{
+        public IActionResult PredictSentiment(CamXucVM vm)
+        {
             //Load sample data
             var sampleData = new CamXucModel.ModelInput()
             {
@@ -38,19 +38,19 @@ namespace CamXucWeb.Controllers
 
             // Pass the prediction result to the view
             var m1 = Math.Round(result.Score[0] * 100, 1);
-			var m2 = Math.Round(result.Score[1] * 100, 1);
+            var m2 = Math.Round(result.Score[1] * 100, 1);
 
-			if (m1 > m2)
-			{
-				ViewBag.Ketqua = "Tích cực";
-			}
-			else
-			{
-				ViewBag.Ketqua = "Tiêu cực";
-			}
+            if (m1 > m2)
+            {
+                ViewBag.Ketqua = "Tích cực";
+            }
+            else
+            {
+                ViewBag.Ketqua = "Tiêu cực";
+            }
 
-			return View("Index");
-		}
+            return View("Index");
+        }
 
         public async Task<IActionResult> Statistics()
         {

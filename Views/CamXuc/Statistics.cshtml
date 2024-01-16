@@ -4,8 +4,31 @@
     ViewData["Title"] = "Statistics";
 }
 
-
 <h2>Statistics</h2>
 
-<p>Positive Percentage: @Model?.PositivePercentage%</p>
-<p>Negative Percentage: @Model?.NegativePercentage%</p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Overall Sentiment</div>
+            <div class="card-body">
+                <canvas id="overallChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Script để vẽ biểu đồ hình tròn
+    var overallCtx = document.getElementById('overallChart').getContext('2d');
+
+    var overallChart = new Chart(overallCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Positive', 'Negative'],
+            datasets: [{
+                data: [@Model.PositivePercentage, @Model.NegativePercentage],
+                backgroundColor: ['#36a2eb', '#ff6384']
+            }]
+        }
+    });
+</script>

@@ -32,7 +32,7 @@ namespace CamXucWeb.Interface
             var positiveReviews = await _context.reviews!.ToListAsync();
             var countPositiveReviews = positiveReviews.Count(r => r.IsPositive);
 
-            return Math.Round(CalculatePercentage(countPositiveReviews, countTotalReviews),1);
+            return Math.Round(CalculatePercentage(countPositiveReviews, countTotalReviews), 1);
         }
 
         public async Task<double> GetNegativePercentage()
@@ -43,7 +43,7 @@ namespace CamXucWeb.Interface
             var positiveReviews = await _context.reviews!.ToListAsync();
             var countPositiveReviews = positiveReviews.Count(r => !r.IsPositive);
 
-            return Math.Round(CalculatePercentage(countPositiveReviews, countTotalReviews),1);
+            return Math.Round(CalculatePercentage(countPositiveReviews, countTotalReviews), 1);
         }
 
         private double CalculatePercentage(int part, int total)
