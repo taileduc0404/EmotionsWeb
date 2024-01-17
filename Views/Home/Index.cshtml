@@ -1,8 +1,64 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model CamXucWeb.ViewModels.HomeVM
+@using X.PagedList.Mvc.Core
+
+@{
+	ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container">
+	<div class="text-center">
+		<h1 class="display-4">Welcome</h1>
+		<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	</div>
+
+	@*@for (int i = 0; i < Model.Reviews!.Count; i++)
+	{
+	<p>@(i + 1). @Model.Reviews[i].Text</p>
+	}
+	*@
+	@{
+		int a = 1;
+		int countReview = Model.Reviews!.Count;
+		int reviewIsPositive = Model.Reviews.Count(review => review.IsPositive);
+		int reviewNegative = countReview - reviewIsPositive;
+	}
+
+	<h4>Tổng số review: @countReview</h4>
+	<h5>Review tích cực: @reviewIsPositive</h5>
+	<h5>Review tiêu cực: @reviewNegative</h5>
+
+	@foreach (var review in Model.Reviews!)
+	{
+		<p>@(a++). @review.Text</p>
+	}
+
+	@*<div class="pagination-container">
+		@Html.PagedListPager(Model.Reviews,page=>Url.Action("Index", new{page, pageSize=Model.Reviews.PageSize}))
+	</div>*@
+	<div class="pagination-container">
+		<nav aria-label="Page navigation">
+			<ul class="pagination justify-content-center">
+				<li class="page-item @(Model.Reviews.HasPreviousPage ? "" : "disabled")">
+					<a class="page-link" href="@Url.Action("Index", new { page = Model.Reviews.PageNumber - 1, pageSize = Model.Reviews.PageSize })" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+
+				@for (int i = 1; i <= Model.Reviews.PageCount; i++)
+				{
+					<li class="page-item @(Model.Reviews.PageNumber == i ? "active" : "")">
+						<a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = Model.Reviews.PageSize })">@i</a>
+					</li>
+				}
+
+				<li class="page-item @(Model.Reviews.HasNextPage ? "" : "disabled")">
+					<a class="page-link" href="@Url.Action("Index", new { page = Model.Reviews.PageNumber + 1, pageSize = Model.Reviews.PageSize })" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+
 </div>
